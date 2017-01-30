@@ -112,10 +112,124 @@ def download_financial_data(path = 'C:/work/ChinaStocks/'):
             print(str(start))
             margin = ts.sz_margin_details(str(start))
             if not margin.empty:
-                sz_margin = pd.concat([sz_margin, margin], ignore_index = False)
+                sz_margin = pd.concat([sz_margin, margin], ignore_index = True)
             start = start + timedelta(1)
         sz_margin.to_csv('data/financials/sz_margin_details' + str(year) + '.csv',
                          index = False, encoding = 'utf-8')
 
+    # 8. download report data for each quarter
+    all_reports = pd.DataFrame([])
+    for year in range(2003, date.today().year):
+        year_report = pd.DataFrame([])
+        print('-------------------------------------------')
+        print('Download report data for year ' + str(year))
+        for quarter in range(1, 5):
+            report = ts.get_report_data(year, quarter)
+            report['year'] = year
+            report['quarter'] = quarter
+            if not report.empty:
+                year_report = pd.concat([year_report, report], ignore_index = True)
+            print('')
+        if not year_report.empty:
+            year_report.to_csv('data/financials/report_' + str(year) + '.csv', index = False, encoding = 'utf-8')
+            all_reports = pd.concat([all_reports, year_report], ignore_index = True)
+    if not all_reports.empty:
+        all_reports.to_csv('data/financials/report.csv', index = False, encoding = 'utf-8')
     
+
+    # 9. download profit data for each quarter
+    all_profits = pd.DataFrame([])
+    for year in range(2003, date.today().year):
+        year_profit = pd.DataFrame([])
+        print('-------------------------------------------')
+        print('Download profit data for year ' + str(year))
+        for quarter in range(1, 5):
+            profit = ts.get_profit_data(year, quarter)
+            profit['year'] = year
+            profit['quarter'] = quarter
+            if not profit.empty:
+                year_profit = pd.concat([year_profit, profit], ignore_index = True)
+            print('')
+        if not year_profit.empty:
+            year_profit.to_csv('data/financials/profit_' + str(year) + '.csv', index = False, encoding = 'utf-8')
+            all_profits = pd.concat([all_profits, year_profit], ignore_index = True)
+    if not all_profits.empty:
+        all_profits.to_csv('data/financials/profit.csv', index = False, encoding = 'utf-8')
+    
+    # 10. download operation data for each quarter
+    all_operations = pd.DataFrame([])
+    for year in range(2003, date.today().year):
+        year_operation = pd.DataFrame([])
+        print('-------------------------------------------')
+        print('Download operation data for year ' + str(year))
+        for quarter in range(1, 5):
+            operation = ts.get_operation_data(year, quarter)
+            operation['year'] = year
+            operation['quarter'] = quarter
+            if not operation.empty:
+                year_operation = pd.concat([year_operation, operation], ignore_index = True)
+            print('')
+        if not year_operation.empty:
+            year_operation.to_csv('data/financials/operation_' + str(year) + '.csv', index = False, encoding = 'utf-8')
+            all_operations = pd.concat([all_operations, year_operation], ignore_index = True)
+    if not all_operations.empty:
+        all_operations.to_csv('data/financials/operation.csv', index = False, encoding = 'utf-8')
+    
+    # 11. download growth data for each quarter
+    all_growths = pd.DataFrame([])
+    for year in range(2003, date.today().year):
+        year_growth = pd.DataFrame([])
+        print('-------------------------------------------')
+        print('Download growth data for year ' + str(year))
+        for quarter in range(1, 5):
+            growth = ts.get_growth_data(year, quarter)
+            growth['year'] = year
+            growth['quarter'] = quarter
+            if not growth.empty:
+                year_growth = pd.concat([year_growth, growth], ignore_index = True)
+            print('')
+        if not year_growth.empty:
+            year_growth.to_csv('data/financials/growth_' + str(year) + '.csv', index = False, encoding = 'utf-8')
+            all_growths = pd.concat([all_growths, year_growth], ignore_index = True)
+    if not all_growths.empty:
+        all_growths.to_csv('data/financials/growth.csv', index = False, encoding = 'utf-8')
+    
+    # 12. download debt-paying data for each quarter
+    all_debtpayings = pd.DataFrame([])
+    for year in range(2003, date.today().year):
+        year_debtpaying = pd.DataFrame([])
+        print('-------------------------------------------')
+        print('Download debt-paying data for year ' + str(year))
+        for quarter in range(1, 5):
+            debtpaying = ts.get_debtpaying_data(year, quarter)
+            debtpaying['year'] = year
+            debtpaying['quarter'] = quarter
+            if not debtpaying.empty:
+                year_debtpaying = pd.concat([year_debtpaying, debtpaying], ignore_index = True)
+            print('')
+        if not year_debtpaying.empty:
+            year_debtpaying.to_csv('data/financials/debtpaying_' + str(year) + '.csv', index = False, encoding = 'utf-8')
+            all_debtpayings = pd.concat([all_debtpayings, year_debtpaying], ignore_index = True)
+    if not all_debtpayings.empty:
+        all_debtpayings.to_csv('data/financials/debtpaying.csv', index = False, encoding = 'utf-8')
+    
+    # 13. download cashflow data for each quarter
+    all_cashflows = pd.DataFrame([])
+    for year in range(2011, date.today().year):
+        year_cashflow = pd.DataFrame([])
+        print('-------------------------------------------')
+        print('Download cashflow data for year ' + str(year))
+        for quarter in range(1, 5):
+            cashflow = ts.get_cashflow_data(year, quarter)
+            cashflow['year'] = year
+            cashflow['quarter'] = quarter
+            if not cashflow.empty:
+                year_cashflow = pd.concat([year_cashflow, cashflow], ignore_index = True)
+            print('')
+        if not year_cashflow.empty:
+            year_cashflow.to_csv('data/financials/cashflow_' + str(year) + '.csv', index = False, encoding = 'utf-8')
+            all_cashflows = pd.concat([all_cashflows, year_cashflow], ignore_index = True)
+    if not all_cashflows.empty:
+        all_cashflows.to_csv('data/financials/cashflow.csv', index = False, encoding = 'utf-8')
+        
 download_financial_data()
